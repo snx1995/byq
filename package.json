@@ -1,0 +1,22 @@
+{
+    "name": "byq",
+    "version": "0.0.0",
+    "server": {
+        "port": 54321
+    },
+    "scripts": {
+        "dev": "npm run clear && npm run compile && node ./dist/server.js",
+        "compile": "tsc",
+        "clear": "node scripts/clear.js"
+    },
+    "description": "a index page backend",
+    "main": "server.js",
+    "keywords": [
+        "node"
+    ],
+    "author": "byq",
+    "license": "ISC",
+    "dependencies": {
+        "@types/node": "^10.12.21"
+    }
+}
