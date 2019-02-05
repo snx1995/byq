@@ -1,22 +1,23 @@
-import { ServerResponse, ClientRequest } from "http";
+import {ServerResponse, ClientRequest} from "http";
+import {Filter, RequestFilter, FilterChain} from './platform/filter/filter';
+import Dispatcher from './platform/dispatcher';
 
 const http = require('http');
 const PORT = process.env.npm_package_server_port;
 
+const filterChain = new FilterChain([new Filter('filter1'), new Filter('filter2')]);
+
+initFilters(filterChain);
+
+
 http.createServer((request: Request, response: ServerResponse) => {
-    console.log("received request", request.method);
+    filterChain.doRequest(request, response);
     response.end("hello world");
 }).listen(PORT);
 
 console.log("server is running");
 
-
-let o = {};
-Object.defineProperty(o, 'test', {
-    get() {
-        return 1;
-    },
-    set(x) {
-        this.test = x;
-    }
-})
+function initFilters(filterChain: FilterChain):void {
+    filterChain.registerDispatcher(new Dispatcher());
+    filterChain.registerFilter(new RequestFilter());
+}
