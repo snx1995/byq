@@ -4,6 +4,12 @@
         "src/**/*"
     ],
     "compilerOptions": {
-        "outDir": "dist"
+        "outDir": "dist",
+        "module": "commonjs",
+        "noImplicitAny": true,
+        "removeComments": true,
+        "preserveConstEnums": true,
+        "sourceMap": true,
+        "target": "es5"
     }
 }
