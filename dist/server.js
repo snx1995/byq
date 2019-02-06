@@ -8,7 +8,6 @@ var filterChain = new filter_1.FilterChain([new filter_1.Filter('filter1'), new 
 initFilters(filterChain);
 http.createServer(function (request, response) {
     filterChain.doRequest(request, response);
-    response.end("hello world");
 }).listen(PORT);
 console.log("server is running");
 function initFilters(filterChain) {

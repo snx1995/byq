@@ -5,9 +5,10 @@
         "port": 54321
     },
     "scripts": {
-        "dev": "npm run clear && npm run compile && node ./dist/server.js",
-        "compile": "tsc",
-        "clear": "node scripts/clear.js"
+        "dev": "npm run compile && node ./dist/server.js",
+        "compile": "npm run clear && tsc",
+        "clear": "node scripts/clear.js",
+        "clean": "./scripts/clean.sh"
     },
     "description": "a index page backend",
     "main": "server.js",

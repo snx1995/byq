@@ -12,7 +12,6 @@ initFilters(filterChain);
 
 http.createServer((request: Request, response: ServerResponse) => {
     filterChain.doRequest(request, response);
-    response.end("hello world");
 }).listen(PORT);
 
 console.log("server is running");
