@@ -19,5 +19,10 @@ export class Request {
         }
         console.log(_this);
     }
-    
+
+    getParameter(key: string) {
+        return this.parameterMap[key];
+    }
+
+
 }
