@@ -1,6 +1,9 @@
 
-import logger from '../util/logger';
+import LoggerFactory from '../util/logger';
 import Dispather from '../dispatcher';
+import {ServerResponse, IncomingMessage} from "http";
+
+const logger = LoggerFactory.newInstance('Filter');
 
 export class FilterChain {
     chain: Filter[];
@@ -11,12 +14,13 @@ export class FilterChain {
         this.index = 0;
     }
 
-    doRequest(request: object, response: object) {
+    doRequest(request: IncomingMessage, response: ServerResponse) {
         this.index = 0;
+
         this.doFilter(request, response);
     }
 
-    doFilter(request: object, response: object) {
+    doFilter(request: IncomingMessage, response: ServerResponse) {
         if (!this.dispather) throw new Error('FilterChain 需要先注册dispather!');
         if (this.index < this.chain.length) {
             const filter = this.chain[this.index++];
@@ -37,7 +41,7 @@ export class Filter {
     constructor(public name: string) {
         this.name = name;
     }
-    doFilter(request: object, response: object, filterChain: FilterChain) {
+    doFilter(request: IncomingMessage, response: ServerResponse, filterChain: FilterChain) {
         logger.debug(this.name + ' called');
         filterChain.doFilter(request, response);
     }

@@ -1,9 +1,7 @@
-interface RouterMap {
-    path: string;
-    method: string;
-    child?: RouterMap;
+export interface RouterMap {
+    [path: string]: (params: object) => string;
 }
 
-export default class Controller {
+export class Controller {
     router: RouterMap;
 }
