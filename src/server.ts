@@ -1,4 +1,4 @@
-import {ServerResponse, ClientRequest, IncomingMessage} from "http";
+import {ServerResponse, IncomingMessage} from "http";
 import {Filter, RequestFilter, FilterChain} from './platform/filter/filter';
 import Dispatcher from './platform/dispatcher';
 import LoggerFactory from './platform/util/logger';
