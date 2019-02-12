@@ -1,6 +1,6 @@
 import LoggerFactory from './util/logger';
-import {Controller, RouterMap} from './controller/controller';
-import controllers from './controller/controller_register';
+import {Controller, RouterMap} from './controller/Controller';
+import controllers from './controller/ControllerRegister';
 import {ServerResponse, IncomingMessage} from "http";
 
 const logger = LoggerFactory.newInstance('Dispatcher');

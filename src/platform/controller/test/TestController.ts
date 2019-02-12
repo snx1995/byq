@@ -1,5 +1,5 @@
 import LoggerFactory from '../../util/logger';
-import {Controller} from '../controller';
+import {Controller} from '../Controller';
 
 const logger = LoggerFactory.newInstance('TestController');
 export default class TestController extends Controller {
