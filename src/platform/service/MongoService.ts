@@ -7,7 +7,7 @@ interface MDObject {
     md: string
 }
 
-export class MDBClient {
+class MDBClient {
     mdb: Db;
     collection: Collection;
     ready: boolean;
@@ -25,7 +25,7 @@ export class MDBClient {
         });
     }
 
-    queryMDById(id: any, callback: (err: any, data: MDObject) => void) {
+    selectById(id: string, callback: (err: any, data: MDObject) => void) {
         const _this = this;
         if (callback) {
             if (_this.ready) query();
@@ -33,11 +33,20 @@ export class MDBClient {
         }
         
         function query() {
-            _this.collection.findOne({_id: id}).then(data => {
+            _this.collection.findOne({_id: new ObjectId(id)}).then(data => {
                 callback(null, data.md);
-            }, err => {
+            }).catch(err => {
                 callback(err, null);
             })
         }
     }
 }
+let mongoClient: MDBClient;
+const DatabaseFactory = {
+    mongoClient() {
+        if (!mongoClient) mongoClient = new MDBClient();
+        return mongoClient;
+    }
+}
+
+export default DatabaseFactory;

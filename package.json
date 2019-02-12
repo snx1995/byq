@@ -5,7 +5,8 @@
         "port": 54321
     },
     "scripts": {
-        "dev": "npm run compile && node ./dist/server.js",
+        "server": "node ./dist/server.js",
+        "dev": "npm run compile && npm run server",
         "compile": "npm run clear && tsc",
         "clear": "node scripts/clear.js",
         "clean": "./scripts/clean.sh"
