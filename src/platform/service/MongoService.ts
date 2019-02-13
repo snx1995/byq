@@ -34,7 +34,7 @@ class MDBClient {
         
         function query() {
             _this.collection.findOne({_id: new ObjectId(id)}).then(data => {
-                callback(null, data.md);
+                callback(null, data);
             }).catch(err => {
                 callback(err, null);
             })

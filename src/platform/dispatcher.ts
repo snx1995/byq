@@ -2,6 +2,7 @@ import LoggerFactory from './util/logger';
 import {Controller, RouterMap} from './controller/Controller';
 import controllers from './controller/ControllerRegister';
 import {ServerResponse, IncomingMessage} from "http";
+import { ByRequest, ByResponse } from './http/http';
 
 const logger = LoggerFactory.newInstance('Dispatcher');
 
@@ -20,11 +21,23 @@ function buildRouterMap(controllers: Controller[]) {
     return map;
 }
 
-buildRouterMap(controllers);
-
 export default class Dispatcher {
-    
+    map: RouterMap;
+    constructor() {
+        this.map = buildRouterMap(controllers);
+        console.log(this.map);
+    }
+
     dispatch(request: IncomingMessage, response: ServerResponse) {
-        logger.debug('dispatcher called');
+        const req: ByRequest = new ByRequest(request);
+        const resp: ByResponse = new ByResponse(response);
+        let uri = req.uri;
+        logger.debug(uri);
+        if (uri.endsWith('.do')) {
+            uri = uri.replace(/^(.*)\.do$/, '$1');
+            const controller = this.map[uri];
+            if (!controller) throw new Error('no controller found for ' + uri);
+            controller(req, resp);
+        } else throw new Error('Unsupported request');
     }
 }
