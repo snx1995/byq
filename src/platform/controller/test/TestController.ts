@@ -1,7 +1,11 @@
 import LoggerFactory from '../../util/logger';
 import {Controller} from '../Controller';
+import ServerEvent from '../../event/EventCenter';
+
+
 
 const logger = LoggerFactory.newInstance('TestController');
+
 export default class TestController extends Controller {
     constructor() {
         super();

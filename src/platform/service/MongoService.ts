@@ -1,8 +1,9 @@
-import {MongoClient, Db, Collection, ObjectId} from 'mongodb';
+import {MongoClient, Db, Collection, ObjectId, Logger} from 'mongodb';
 import {EventEmitter} from 'events';
+import LoggerFactory from '../util/logger';
 
 const URL = 'mongodb://localhost:27017/byq';
-
+const logger = LoggerFactory.newInstance('MDBClient');
 interface MDObject {
     md: string
 }
@@ -17,7 +18,10 @@ class MDBClient {
         this.ready = false;
         this.event = new EventEmitter();
         MongoClient.connect(URL, {useNewUrlParser: true}, (err, db: MongoClient) => {
-            if (err) throw err;
+            if (err) {
+                logger.error('error happened here');
+                throw err;
+            }
             this.mdb = db.db();
             this.collection = this.mdb.collection("markdown");
             this.ready = true;
@@ -33,11 +37,15 @@ class MDBClient {
         }
         
         function query() {
-            _this.collection.findOne({_id: new ObjectId(id)}).then(data => {
-                callback(null, data);
-            }).catch(err => {
+            try {
+                _this.collection.findOne({_id: new ObjectId(id)}).then(data => {
+                    callback(null, data);
+                }).catch(err => {
+                    callback(err, null);
+                })
+            } catch (err) {
                 callback(err, null);
-            })
+            }
         }
     }
 }

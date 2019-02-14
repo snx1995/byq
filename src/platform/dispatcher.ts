@@ -36,8 +36,8 @@ export default class Dispatcher {
         if (uri.endsWith('.do')) {
             uri = uri.replace(/^(.*)\.do$/, '$1');
             const controller = this.map[uri];
-            if (!controller) throw new Error('no controller found for ' + uri);
+            if (!controller) resp.echo403();
             controller(req, resp);
-        } else throw new Error('Unsupported request');
+        } else resp.echo400();
     }
 }

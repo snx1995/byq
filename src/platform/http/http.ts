@@ -33,10 +33,40 @@ export class ByResponse {
 
     }
 
+    echo(status: number) {
+        this.response.writeHead(status);
+        this.response.end();
+    }
+
     echoJSON(data: any, status = 200): void {
         const resp = this.response;
         resp.setHeader('Content-Type', 'application/json;charset=utf-8;');
         resp.writeHead(status);
         resp.end(JSON.stringify(data));
+    }
+
+    // 传入的status和data将被写入response的body部分，而响应状态码始终为200
+    echoResp(status: number, data: any) {
+        this.echoJSON({status, data});
+    }
+
+    echo400() {
+        this.response.writeHead(400);
+        this.response.end();
+    }
+
+    echo404() {
+        this.response.writeHead(404);
+        this.response.end();
+    }
+
+    echo403() {
+        this.response.writeHead(403);
+        this.response.end();
+    }
+
+    echo500() {
+        this.response.writeHead(500);
+        this.response.end();
     }
 }
